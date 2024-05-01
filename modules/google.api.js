@@ -4,11 +4,11 @@ require('dotenv').config()
 
 
 class googleCalendarApi{
-    constructor(CALENDAR_ID, KEYFILE, SCOPE_CALENDAR, SCOPE_EVENTS){
-        this.CALENDAR_ID = process.env.CALENDAR_ID
-        this.KEYFILE = process.env.KEYFILE
-        this.SCOPE_CALENDAR = process.env.SCOPE_CALENDAR
-        this.SCOPE_EVENTS = process.env.SCOPE_EVENTS
+    constructor(){
+        this.CALENDAR_ID = '1f30b23b431998eacce396c91cd329a38a9412c3b820d4b8649f9a56726e5e57@group.calendar.google.com'
+        this.KEYFILE = 'calendar-tast-6c99426d79ae.json'
+        this.SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar'
+        this.SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events'
     }
 
     async readPrivateKey() {
