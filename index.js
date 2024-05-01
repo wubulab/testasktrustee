@@ -21,6 +21,8 @@ async function checkScheduleConflict(events, movieSession) {
     }
     return true;
 }
+
+// first one
 app.get("/", async (req, res) => {
     try {
         const response = await axios.get(siteForDataFromCinema);
@@ -47,6 +49,25 @@ app.get("/", async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+// second one
+app.get("/", async (req, res)=>{
+    const response = await axios.get(siteForDataFromCinema)
+    const data = response.data.movie_sessions
+    const result = []
+    const googleApi = new googleCalendarApi()
+    const key = await googleApi.readPrivateKey(process.env.KEYFILE)
+    const auth = await googleApi.authenticate(key);
+    const events = await googleApi.readEvent(auth);
+    for (let item of data) {
+        const hasConflict = await checkScheduleConflict(events, item);
+        if (hasConflict) {
+            result.push(`Great! You can watch ${item.movie_title} at ${item.start_time}`);
+        }
+    }
+    res.send(result)
+})
+
 
 // app.get("/", async (req, res) => {
 //     const response = await axios.get(siteForDataFromCinema)
